@@ -14,7 +14,7 @@ class ExportMapper
                 if (isset($item['transform'])) {
                     $value = Transformer::apply($value, $item['transform']);
                 }
-                $result[$item['external']] = $value;
+                $result[$item['external_name']] = $value;
             }
 
             if ($item['type'] === 'repeater') {
@@ -27,10 +27,10 @@ class ExportMapper
 
                     foreach ($item['children'] as $child) {
                         if ($child['type'] === 'field') {
-                            $rowData[$child['external']] =
+                            $rowData[$child['external_name']] =
                                 data_get($row, implode('.', $child['path']));
                             if (isset($child['transform'])) {
-                                $rowData[$child['external']] = Transformer::apply($rowData[$child['external']], $child['transform']);
+                                $rowData[$child['external_name']] = Transformer::apply($rowData[$child['external_name']], $child['transform']);
                             }
                         }
                     }
@@ -38,7 +38,7 @@ class ExportMapper
                     $mapped[] = $rowData;
                 }
 
-                $result[$item['external']] = $mapped;
+                $result[$item['external_name']] = $mapped;
             }
         }
 
