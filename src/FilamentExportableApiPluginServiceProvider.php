@@ -2,10 +2,7 @@
 
 namespace UJCMOK\FilamentExportableApiPlugin;
 
-use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
@@ -14,6 +11,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use UJCMOK\FilamentExportableApiPlugin\Commands\FilamentExportableApiPluginCommand;
+use UJCMOK\FilamentExportableApiPlugin\Macros\ExportableMacro;
 use UJCMOK\FilamentExportableApiPlugin\Testing\TestsFilamentExportableApiPlugin;
 
 class FilamentExportableApiPluginServiceProvider extends PackageServiceProvider
@@ -58,7 +56,29 @@ class FilamentExportableApiPluginServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function packageRegistered(): void {}
+    /**
+     * @return array<class-string>
+     */
+    protected function getCommands(): array
+    {
+        return [
+            FilamentExportableApiPluginCommand::class,
+        ];
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getMigrations(): array
+    {
+        return [
+            'create_filament-exportable-api-plugin_table',
+        ];
+    }
+
+    public function packageRegistered(): void
+    {
+    }
 
     public function packageBooted(): void
     {
@@ -87,11 +107,8 @@ class FilamentExportableApiPluginServiceProvider extends PackageServiceProvider
 
         // Testing
         Testable::mixin(new TestsFilamentExportableApiPlugin);
-    }
 
-    protected function getAssetPackageName(): ?string
-    {
-        return 'ujcmok/filament-exportable-api-plugin';
+        ExportableMacro::register();
     }
 
     /**
@@ -106,14 +123,17 @@ class FilamentExportableApiPluginServiceProvider extends PackageServiceProvider
         ];
     }
 
-    /**
-     * @return array<class-string>
-     */
-    protected function getCommands(): array
+    protected function getAssetPackageName(): ?string
     {
-        return [
-            FilamentExportableApiPluginCommand::class,
-        ];
+        return 'ujcmok/filament-exportable-api-plugin';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getScriptData(): array
+    {
+        return [];
     }
 
     /**
@@ -130,23 +150,5 @@ class FilamentExportableApiPluginServiceProvider extends PackageServiceProvider
     protected function getRoutes(): array
     {
         return [];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function getScriptData(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<string>
-     */
-    protected function getMigrations(): array
-    {
-        return [
-            'create_filament-exportable-api-plugin_table',
-        ];
     }
 }
