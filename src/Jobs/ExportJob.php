@@ -8,14 +8,13 @@ use Illuminate\Foundation\Queue\Queueable;
 
 class ExportJob implements ShouldQueue
 {
-    use Dispatchable, Queueable;
+    use Dispatchable;
+    use Queueable;
 
-    public function __construct(public array $payload)
-    {
-    }
+    public function __construct(public array $payload) {}
 
     public function handle()
     {
-//        Http::post('https://api.external.com', $this->payload);
+        //        Http::post('https://api.external.com', $this->payload);
     }
 }

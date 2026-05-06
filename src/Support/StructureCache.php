@@ -8,7 +8,7 @@ class StructureCache
 {
     public static function remember(string $key, callable $callback)
     {
-        if (!config('filament-exportable.cache.enabled')) {
+        if (! config('filament-exportable.cache.enabled')) {
             return $callback();
         }
 

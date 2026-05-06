@@ -11,7 +11,6 @@ class ExportableMacro
     {
         Field::macro('exportable', function (?string $externalName = null, ?callable $transform = null) {
             /** @var Field $this */
-
             $this->meta('exportable', true);
             $this->meta('external_name', $externalName);
             $this->meta('transform', $transform);
@@ -28,7 +27,6 @@ class ExportableMacro
 
         Repeater::macro('exportableGroup', function (?string $externalName = null, ?callable $transform = null) {
             /** @var Repeater $this */
-
             $this->meta('exportable', true);
             $this->meta('external_name', $externalName);
             $this->meta('transform', $transform);

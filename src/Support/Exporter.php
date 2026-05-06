@@ -8,7 +8,7 @@ class Exporter
     {
         $structure = StructureCache::remember(
             'form_' . md5(get_class($form)),
-            fn() => ComponentCollector::collect($form->getComponents())
+            fn () => ComponentCollector::collect($form->getComponents())
         );
 
         $data = $form->getState();
