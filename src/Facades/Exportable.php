@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use UJCMOK\FilamentExportableApiPlugin\FilamentExportableApiPlugin;
 
 /**
- * @see \UJCMOK\FilamentExportableApiPlugin\Exportable
+ * @see FilamentExportableApiPlugin
  */
 class Exportable extends Facade
 {
