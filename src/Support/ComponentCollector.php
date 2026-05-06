@@ -18,7 +18,7 @@ class ComponentCollector
                 $result[] = [
                     'type' => 'field',
                     'path' => $currentPath,
-                    'external' => $meta['external'] ?? $name,
+                    'external_name' => $meta['external_name'] ?? $name,
                 ];
             }
 
@@ -26,7 +26,7 @@ class ComponentCollector
                 $result[] = [
                     'type' => 'repeater',
                     'path' => $currentPath,
-                    'external' => $meta['external'] ?? $name,
+                    'external_name' => $meta['external_name'] ?? $name,
                     'children' => self::collect(
                         $component->getChildComponents(),
                         []
