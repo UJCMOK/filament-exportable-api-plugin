@@ -64,7 +64,7 @@
                 "UJCMOK\\FilamentExportableApiPlugin\\FilamentExportableApiPluginServiceProvider"
             ],
             "aliases": {
-                "FilamentExportableApiPlugin": "UJCMOK\\FilamentExportableApiPlugin\\Facades\\FilamentExportableApiPlugin"
+                "FilamentExportableApiPlugin": "Exportable"
             }
         }
     },
