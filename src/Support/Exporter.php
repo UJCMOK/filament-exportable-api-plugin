@@ -7,7 +7,7 @@ class Exporter
     public static function fromForm($form): array
     {
         $structure = StructureCache::remember(
-            'form_' . md5(get_class($form)),
+            'form_' . md5(get_class($form->getLivewire())),
             fn () => ComponentCollector::collect($form->getComponents())
         );
 
