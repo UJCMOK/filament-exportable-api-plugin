@@ -2,6 +2,8 @@
 
 namespace UJCMOK\FilamentExportableApiPlugin\Support;
 
+use Illuminate\Support\Arr;
+
 class ExportMapper
 {
     public static function map(array $data, array $structure): array
@@ -41,7 +43,7 @@ class ExportMapper
                 $result[$item['external_name']] = $mapped;
             }
         }
-
+        $result = Arr::undot($result);
         return $result;
     }
 }
