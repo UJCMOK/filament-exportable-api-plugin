@@ -44,6 +44,7 @@ class ExportMapper
             }
         }
         $result = Arr::undot($result);
+
         return $result;
     }
 }
