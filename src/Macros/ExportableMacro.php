@@ -27,7 +27,7 @@ class ExportableMacro
 
         Repeater::macro('exportableGroup', function (?string $externalName = null, ?callable $transform = null) {
             /** @var Repeater $this */
-            $this->meta('exportableGroup', true);
+            $this->meta('exportable_group', true);
             $this->meta('external_name', $externalName);
             $this->meta('transform', $transform);
 
