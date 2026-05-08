@@ -9,7 +9,7 @@ class ExportableMacro
 {
     public static function register()
     {
-        Field::macro('exportable', function (?string $externalName = null, bool|callable $valueCanBeExported = true, ?callable $transform = null) {
+        Field::macro('exportable', function (?string $externalName = null, bool | callable $valueCanBeExported = true, ?callable $transform = null) {
             /** @var Field $this */
             $this->meta('exportable', true);
             $this->meta('value_can_be_exported', $valueCanBeExported);

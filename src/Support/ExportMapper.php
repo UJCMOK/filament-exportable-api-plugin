@@ -3,7 +3,6 @@
 namespace UJCMOK\FilamentExportableApiPlugin\Support;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class ExportMapper
 {
@@ -13,14 +12,14 @@ class ExportMapper
 
         foreach ($structure as $item) {
             if ($item['type'] === 'field') {
-                if(is_callable($item['value_can_be_exported'])) {
+                if (is_callable($item['value_can_be_exported'])) {
                     $valueCanBeExported = (app()->call($item['value_can_be_exported'], [
                         'get' => fn ($field) => self::get($data, $field),
                     ]));
                 } else {
                     $valueCanBeExported = $item['value_can_be_exported'];
                 }
-                if($valueCanBeExported) {
+                if ($valueCanBeExported) {
                     $value = data_get($data, implode('.', $item['path']));
                     if (isset($item['transform'])) {
                         $value = Transformer::apply($value, $item['transform']);
@@ -39,7 +38,7 @@ class ExportMapper
 
                     foreach ($item['children'] as $child) {
                         if ($child['type'] === 'field') {
-                            if(is_callable($child['value_can_be_exported'])) {
+                            if (is_callable($child['value_can_be_exported'])) {
                                 $valueCanBeExported = (app()->call($child['value_can_be_exported'], [
                                     'get' => fn ($field) => str($field)->startsWith('../') ? self::get($data, $field) : self::get($row, $field),
                                 ]));
@@ -47,7 +46,7 @@ class ExportMapper
                                 $valueCanBeExported = $child['value_can_be_exported'];
                             }
 
-                            if($valueCanBeExported) {
+                            if ($valueCanBeExported) {
                                 $rowData[$child['external_name']] =
                                     data_get($row, implode('.', $child['path']));
                                 if (isset($child['transform'])) {
@@ -70,6 +69,6 @@ class ExportMapper
 
     protected static function get(array $data, string $field, string $path = '')
     {
-        return data_get($data, ($path !== '' ? $path.'.'.$field : $field));
+        return data_get($data, ($path !== '' ? $path . '.' . $field : $field));
     }
 }
