@@ -3,6 +3,7 @@
 namespace UJCMOK\FilamentExportableApiPlugin\Support;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class ExportMapper
 {
@@ -12,11 +13,20 @@ class ExportMapper
 
         foreach ($structure as $item) {
             if ($item['type'] === 'field') {
-                $value = data_get($data, implode('.', $item['path']));
-                if (isset($item['transform'])) {
-                    $value = Transformer::apply($value, $item['transform']);
+                if(is_callable($item['value_can_be_exported'])) {
+                    $valueCanBeExported = (app()->call($item['value_can_be_exported'], [
+                        'get' => fn ($field) => self::get($data, $field),
+                    ]));
+                } else {
+                    $valueCanBeExported = $item['value_can_be_exported'];
                 }
-                $result[$item['external_name']] = $value;
+                if($valueCanBeExported) {
+                    $value = data_get($data, implode('.', $item['path']));
+                    if (isset($item['transform'])) {
+                        $value = Transformer::apply($value, $item['transform']);
+                    }
+                    $result[$item['external_name']] = $value;
+                }
             }
 
             if ($item['type'] === 'repeater') {
@@ -29,10 +39,20 @@ class ExportMapper
 
                     foreach ($item['children'] as $child) {
                         if ($child['type'] === 'field') {
-                            $rowData[$child['external_name']] =
-                                data_get($row, implode('.', $child['path']));
-                            if (isset($child['transform'])) {
-                                $rowData[$child['external_name']] = Transformer::apply($rowData[$child['external_name']], $child['transform']);
+                            if(is_callable($child['value_can_be_exported'])) {
+                                $valueCanBeExported = (app()->call($child['value_can_be_exported'], [
+                                    'get' => fn ($field) => str($field)->startsWith('../') ? self::get($data, $field) : self::get($row, $field),
+                                ]));
+                            } else {
+                                $valueCanBeExported = $child['value_can_be_exported'];
+                            }
+
+                            if($valueCanBeExported) {
+                                $rowData[$child['external_name']] =
+                                    data_get($row, implode('.', $child['path']));
+                                if (isset($child['transform'])) {
+                                    $rowData[$child['external_name']] = Transformer::apply($rowData[$child['external_name']], $child['transform']);
+                                }
                             }
                         }
                     }
@@ -46,5 +66,10 @@ class ExportMapper
         $result = Arr::undot($result);
 
         return $result;
+    }
+
+    protected static function get(array $data, string $field, string $path = '')
+    {
+        return data_get($data, ($path !== '' ? $path.'.'.$field : $field));
     }
 }
