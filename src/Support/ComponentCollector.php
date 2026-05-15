@@ -20,6 +20,7 @@ class ComponentCollector
                     'path' => $currentPath,
                     'external_name' => $meta['external_name'] ?? $name,
                     'value_can_be_exported' => $meta['value_can_be_exported'],
+                    'transform' => $meta['transform'],
                 ];
             }
 
