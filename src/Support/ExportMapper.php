@@ -15,6 +15,7 @@ class ExportMapper
                 if (is_callable($item['value_can_be_exported'])) {
                     $valueCanBeExported = (app()->call($item['value_can_be_exported'], [
                         'get' => fn ($field) => self::get($data, $field),
+                        'value' => data_get($data, implode('.', $item['path'])),
                     ]));
                 } else {
                     $valueCanBeExported = $item['value_can_be_exported'];
@@ -41,6 +42,7 @@ class ExportMapper
                             if (is_callable($child['value_can_be_exported'])) {
                                 $valueCanBeExported = (app()->call($child['value_can_be_exported'], [
                                     'get' => fn ($field) => str($field)->startsWith('../') ? self::get($data, $field) : self::get($row, $field),
+                                    'value' => data_get($data, implode('.', $child['path'])),
                                 ]));
                             } else {
                                 $valueCanBeExported = $child['value_can_be_exported'];
