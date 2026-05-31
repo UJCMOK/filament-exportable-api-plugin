@@ -14,7 +14,7 @@ return [
     ],
 
     'cache' => [
-        'enabled' => true,
+        'enabled' => false,
         'ttl' => 3600,
     ],
 
