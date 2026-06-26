@@ -61,7 +61,9 @@ class ExportMapper
                     $mapped[] = Arr::undot($rowData);
                 }
 
-                $result[$item['external_name']] = $mapped;
+                if (! empty($mapped)) {
+                    $result[$item['external_name']] = $mapped;
+                }
             }
         }
         $result = Arr::undot($result);
