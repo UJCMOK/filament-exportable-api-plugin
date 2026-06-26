@@ -12,7 +12,6 @@ class ComponentCollector
             $meta = method_exists($component, 'getMeta') ? $component->getMeta() : [];
             $name = method_exists($component, 'getName') ? $component->getName() : null;
 
-
             $currentPath = $name ? [...$path, $name] : $path;
 
             if (($meta['exportable'] ?? false) && $name) {
