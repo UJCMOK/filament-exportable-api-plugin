@@ -10,7 +10,7 @@ class Exporter
     {
         $structure = StructureCache::remember(
             'form_' . md5(get_class($form->getLivewire())),
-            fn () => ComponentCollector::collect($form->getComponents())
+            fn () => ComponentCollector::collect($form->getComponents(withHidden: true))
         );
 
         $data = $form->getState();

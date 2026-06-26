@@ -20,7 +20,7 @@ class ExportMapper
                 } else {
                     $valueCanBeExported = $item['value_can_be_exported'];
                 }
-                if ($valueCanBeExported) {
+                if ($valueCanBeExported && $item['component']->isVisible() && $item['component']->getContainer()?->getParentComponent()?->isVisible()) {
                     $value = data_get($data, implode('.', $item['path']));
                     if (isset($item['transform'])) {
                         $value = Transformer::apply($value, $item['transform']);
@@ -48,7 +48,7 @@ class ExportMapper
                                 $valueCanBeExported = $child['value_can_be_exported'];
                             }
 
-                            if ($valueCanBeExported) {
+                            if ($valueCanBeExported && $child['component']->isVisible() && $child['component']->getContainer()?->getParentComponent()?->isVisible()) {
                                 $rowData[$child['external_name']] =
                                     data_get($row, implode('.', $child['path']));
                                 if (isset($child['transform'])) {
