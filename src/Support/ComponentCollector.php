@@ -21,6 +21,7 @@ class ComponentCollector
                     'external_name' => $meta['external_name'] ?? $name,
                     'value_can_be_exported' => $meta['value_can_be_exported'],
                     'transform' => $meta['transform'],
+                    'component' => $component,
                 ];
             }
 
@@ -30,7 +31,7 @@ class ComponentCollector
                     'path' => $currentPath,
                     'external_name' => $meta['external_name'] ?? $name,
                     'children' => self::collect(
-                        $component->getChildComponents(),
+                        $component->getChildSchema()->getComponents(withHidden: true),
                         []
                     ),
                 ];
@@ -38,10 +39,10 @@ class ComponentCollector
                 continue;
             }
 
-            if (method_exists($component, 'getChildComponents')) {
+            if (method_exists($component, 'getChildSchema')) {
                 $result = array_merge(
                     $result,
-                    self::collect($component->getChildComponents(), $currentPath)
+                    self::collect($component->getChildSchema()->getComponents(withHidden: true), $currentPath)
                 );
             }
         }
