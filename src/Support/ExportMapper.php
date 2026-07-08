@@ -36,7 +36,7 @@ class ExportMapper
 
                 foreach ($rows as $row) {
                     $rowData = [];
-                    
+
                     $item['component']->state([$row]);
 
                     foreach ($item['children'] as $child) {
