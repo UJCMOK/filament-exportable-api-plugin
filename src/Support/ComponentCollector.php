@@ -30,6 +30,7 @@ class ComponentCollector
                     'type' => 'repeater',
                     'path' => $currentPath,
                     'external_name' => $meta['external_name'] ?? $name,
+                    'component' => $component,
                     'children' => self::collect(
                         $component->getChildSchema()->getComponents(withHidden: true),
                         []
