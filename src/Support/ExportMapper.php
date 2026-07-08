@@ -50,6 +50,7 @@ class ExportMapper
                                 $valueCanBeExported = $child['value_can_be_exported'];
                             }
 
+                            $child['component']->isVisible();
                             if ($valueCanBeExported && $child['component']->isVisible() && $child['component']->getContainer()?->getParentComponent()?->isVisible()) {
                                 $rowData[$child['external_name']] =
                                     data_get($row, implode('.', $child['path']));
